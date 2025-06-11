@@ -1,0 +1,25 @@
+steps:
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['build', '-t', '${_IMAGE_NAME}', '.']
+
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['push', '${_IMAGE_NAME}']
+
+  - name: 'gcr.io/cloud-builders/gcloud'
+    args:
+      [
+        'run', 'deploy', '${_CLOUD_RUN_SERVICE}',
+        '--image', '${_IMAGE_NAME}',
+        '--region', '${_CLOUD_RUN_REGION}',
+        '--platform', 'managed',
+        '--allow-unauthenticated',
+        '--quiet'
+      ]
+
+substitutions:
+  _IMAGE_NAME: 'gcr.io/${PROJECT_ID}/test-image'
+  _CLOUD_RUN_SERVICE: 'test-service'
+  _CLOUD_RUN_REGION: 'us-central1'
+
+options:
+  dynamicSubstitutions: true
