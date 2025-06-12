@@ -17,7 +17,7 @@ steps:
       ]
 
 substitutions:
-  _IMAGE_NAME: "gcr.io/${PROJECT_ID}/test-image"
+  _IMAGE_NAME: "gcr.io/$PROJECT_ID/test-image"
   _CLOUD_RUN_SERVICE: "test-service"
   _CLOUD_RUN_REGION: "us-central1"
 
